@@ -1,0 +1,7 @@
+scc<- readRDS("Source_Classification_Code.rds")
+nei<- readRDS("summarySCC_PM25.rds")
+a<- subset(nei, nei$fips=="24510")
+total<- summarise(group_by(a, year, type), Emissions=sum(Emissions))
+png(file="plot3.png",width=780, height=480)
+ggplot(total, aes(x=factor(year), y=Emissions, fill=type))+ geom_bar(stat = "identity")+facet_grid(~type)
+dev.off()
